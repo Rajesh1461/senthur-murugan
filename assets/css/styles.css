@@ -858,7 +858,7 @@ img[src$="SMname.png"] {
 
 .testimonials-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
 
@@ -2562,4 +2562,17 @@ body::after {
   color: var(--color-primary) !important;
   text-shadow: 0 0 8px rgba(0, 242, 254, 0.5) !important;
   transform: none !important;
+}
+
+/* Perfect alignment and scale-zoom hover effect for property-card images */
+.property-card img {
+  width: 100% !important;
+  height: 220px !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.property-card:hover img {
+  transform: scale(1.06) !important;
 }
