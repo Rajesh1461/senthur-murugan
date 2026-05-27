@@ -1,21 +1,23 @@
 /* Root theme */
 :root {
-  --color-primary: #0b3d91; /* deep blue */
-  --color-accent: #1b9e77; /* green */
-  --color-text: #0f172a;
-  --color-muted: #64748b;
-  --color-bg: #ffffff;
-  --color-surface: #f8fafc;
-  --radius: 14px;
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 10px 20px rgba(2, 12, 27, 0.08);
-  --shadow-lg: 0 24px 48px rgba(2, 12, 27, 0.12);
+  --color-primary: #00f2fe; /* glowing cyber cyan */
+  --color-accent: #00ff88; /* neon emerald */
+  --color-secondary: #9d4edd; /* neon violet */
+  --color-text: #f1f5f9; /* slate 100 - bright text */
+  --color-muted: #94a3b8; /* slate 400 - secondary text */
+  --color-bg: #030712; /* deep space obsidian */
+  --color-surface: #0b0f19; /* dark dashboard surface */
+  --color-card-bg: rgba(15, 23, 42, 0.55); /* semi-transparent glass card */
+  --radius: 16px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 10px 30px rgba(0, 242, 254, 0.06);
+  --shadow-lg: 0 20px 50px rgba(157, 78, 221, 0.12);
 
   /* Header theme (editable) */
-  --header-bg: #050505ee;
-  --header-fg: #c7cbcf;
-  --header-border: rgba(223, 10, 10, 0.267);
-  --header-toggle-border: rgba(223, 10, 10, 0.267);
+  --header-bg: rgba(3, 7, 18, 0.75);
+  --header-fg: #f1f5f9;
+  --header-border: rgba(0, 242, 254, 0.15);
+  --header-toggle-border: rgba(0, 242, 254, 0.3);
 }
 
 /* Base */
@@ -295,7 +297,9 @@ img[src$="SMname.png"] {
 
 /* Light blue gradient background for About container */
 .about .container.grid-2 {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.10), rgba(147, 197, 253, 0.20));
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.05), rgba(157, 78, 221, 0.08)) !important;
+  border: 1px solid rgba(0, 242, 254, 0.1) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
   border-radius: var(--radius);
   position: relative;
   z-index: 1;
@@ -910,7 +914,7 @@ img[src$="SMname.png"] {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  background-image: url('../images/about.jpg');
+  background-image: linear-gradient(rgba(3, 7, 18, 0.85), rgba(3, 7, 18, 0.92)), url('../images/about.jpg') !important;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -964,14 +968,15 @@ img[src$="SMname.png"] {
 .about-card p,
 .service-card p,
 .financial-card p {
-  color: white !important;
+  color: #eaebea !important;
 }
 
 /* Card headings color - dark blue */
 .about-card h3,
 .service-card h3,
 .financial-card h3 {
-  color: #0b3d91 !important;
+  color: var(--color-primary) !important;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
 }
 
 /* Navigation button animations - Dynamic style */
@@ -1080,32 +1085,57 @@ img[src$="SMname.png"] {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: 1px solid transparent;
+  padding: 14px 28px;
+  border-radius: 30px;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  z-index: 1;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, var(--color-primary), var(--color-secondary), transparent 60%);
+  transition: transform 0.5s ease;
+  transform: translate(-50%, -50%) scale(0);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.btn:hover::before {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .btn-primary {
-  background: var(--color-primary);
-  color: #fff;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: #030712 !important;
+  border: none;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
 }
 
 .btn-primary:hover {
-  filter: brightness(1.07);
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.5), 0 0 40px rgba(157, 78, 221, 0.3);
+  color: #ffffff !important;
 }
 
 .btn-outline {
-  background: #fff;
-  border-color: rgba(15, 23, 42, 0.18);
-  color: var(--color-text);
+  background: transparent;
+  color: var(--color-primary) !important;
+  border: 1px solid rgba(0, 242, 254, 0.4);
 }
 
 .btn-outline:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.25);
+  color: #ffffff !important;
 }
 
 /* Utility: shift element 200px to the right */
@@ -2081,5 +2111,339 @@ img[src$="SMname.png"] {
     max-width: 320px;
   }
 }
+
+/* ==========================================================================
+   FUTURISTIC STYLING ADDITIONS (HUD, Blueprint Grid, Bento, Cyber-accents)
+   ========================================================================== */
+
+/* Typography */
+h1, h2, h3, .section-title {
+  font-family: 'Orbitron', 'Inter', sans-serif !important;
+  letter-spacing: 1px;
+}
+
+/* Digital Blueprint Grid Backdrop */
+.grid-bg-overlay {
+  background-image: 
+    linear-gradient(rgba(0, 242, 254, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 242, 254, 0.035) 1px, transparent 1px);
+  background-size: 50px 50px;
+  background-position: center top;
+}
+
+/* Scanning Laser Line */
+.laser-scan-container {
+  position: relative;
+}
+.laser-scan-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent), var(--color-primary), transparent);
+  box-shadow: 0 0 8px var(--color-primary), 0 0 15px var(--color-primary);
+  opacity: 0.35;
+  animation: laserScan 8s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes laserScan {
+  0% { top: 0%; opacity: 0; }
+  5% { opacity: 0.35; }
+  95% { opacity: 0.35; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* HUD Glassmorphism Cards */
+.hud-card, .about-card, .service-card, .property-card, .financial-card, .testimonial {
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(0, 242, 254, 0.08),
+    transparent 40%
+  ), var(--color-card-bg) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 242, 254, 0.12) !important;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-text);
+  border-radius: var(--radius);
+}
+
+/* HUD Corner Brackets */
+.hud-card::before, .hud-card::after,
+.about-card::before, .about-card::after,
+.service-card::before, .service-card::after,
+.property-card::before, .property-card::after,
+.financial-card::before, .financial-card::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.hud-card::before, .about-card::before, .service-card::before, .property-card::before, .financial-card::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid rgba(0, 242, 254, 0.35);
+  border-left: 2px solid rgba(0, 242, 254, 0.35);
+}
+
+.hud-card::after, .about-card::after, .service-card::after, .property-card::after, .financial-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid rgba(157, 78, 221, 0.35);
+  border-right: 2px solid rgba(157, 78, 221, 0.35);
+}
+
+/* HUD Card Hover Effects */
+.hud-card:hover, .about-card:hover, .service-card:hover, .property-card:hover, .financial-card:hover, .testimonial:hover {
+  border-color: rgba(0, 242, 254, 0.4) !important;
+  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15), 0 0 20px rgba(157, 78, 221, 0.08) !important;
+  transform: translateY(-5px);
+}
+
+.hud-card:hover::before, .about-card:hover::before, .service-card:hover::before, .property-card:hover::before, .financial-card:hover::before {
+  border-color: var(--color-primary);
+}
+
+.hud-card:hover::after, .about-card:hover::after, .service-card:hover::after, .property-card:hover::after, .financial-card:hover::after {
+  border-color: var(--color-secondary);
+}
+
+/* Specific overrides for HUD Property cards */
+.property-card {
+  background: var(--color-card-bg) !important;
+}
+
+.property-body h3 {
+  color: var(--color-text) !important;
+}
+
+.property-meta {
+  color: var(--color-muted) !important;
+}
+
+.property-price {
+  color: var(--color-accent) !important;
+}
+
+.completion-date {
+  color: var(--color-muted) !important;
+  font-size: 12px;
+}
+
+.property-description p {
+  color: var(--color-text) !important;
+}
+
+.property-status.completed {
+  background: rgba(0, 255, 136, 0.12) !important;
+  color: var(--color-accent) !important;
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+/* ASYMMETRIC BENTO GRIDS */
+
+/* About Section Bento Grid */
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 22px !important;
+  margin-top: 30px !important;
+  transform: translateX(-100px) !important;
+}
+
+.about-card:nth-child(1) {
+  grid-column: span 2 !important;
+}
+
+.about-card:nth-child(2) {
+  grid-column: span 1 !important;
+}
+
+.about-card:nth-child(3) {
+  grid-column: span 3 !important;
+}
+
+/* Financial Solutions Section Bento Grid */
+.financial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 24px !important;
+}
+
+.financial-card:nth-child(1) {
+  grid-column: span 2 !important;
+}
+
+.financial-card:nth-child(2) {
+  grid-column: span 1 !important;
+}
+
+.financial-card:nth-child(3) {
+  grid-column: span 3 !important;
+}
+
+/* Particle Canvas Backdrop styling */
+#hero-particle-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glassmorphism Enquiry Modal Custom styling */
+.enquiry-modal {
+  background: rgba(10, 15, 30, 0.7) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1px solid rgba(0, 242, 254, 0.2) !important;
+  color: var(--color-text) !important;
+}
+
+.choice-card {
+  background: rgba(15, 23, 42, 0.4) !important;
+  border: 2px solid rgba(0, 242, 254, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.choice-title {
+  color: var(--color-text) !important;
+}
+
+.choice-desc {
+  color: var(--color-muted) !important;
+}
+
+.modal-header h3 {
+  color: var(--color-primary) !important;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.3);
+}
+
+.enquiry-sub {
+  color: var(--color-muted) !important;
+}
+
+.wa-choice:hover {
+  background: rgba(37, 211, 102, 0.08) !important;
+  border-color: #25D366 !important;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.2) !important;
+}
+
+.email-choice:hover {
+  background: rgba(0, 242, 254, 0.08) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2) !important;
+}
+
+/* Glassmorphism Form elements styling */
+.form-field input,
+.form-field textarea {
+  background: rgba(15, 23, 42, 0.45) !important;
+  border: 1px solid rgba(0, 242, 254, 0.15) !important;
+  color: var(--color-text) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.3) !important;
+  outline: none;
+}
+
+.form-field label {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+/* Interactive properties tabs outline styling */
+.properties-tabs .btn-outline {
+  background: rgba(15, 23, 42, 0.4) !important;
+  border: 1px solid rgba(0, 242, 254, 0.2) !important;
+  color: var(--color-primary) !important;
+}
+
+.properties-tabs .btn-outline:hover,
+.properties-tabs .btn-outline.active {
+  background: var(--color-primary) !important;
+  color: #030712 !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.45) !important;
+}
+
+/* Success popup visual override */
+.success-popup {
+  background: rgba(10, 15, 30, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1.5px solid var(--color-accent) !important;
+  color: var(--color-text) !important;
+  box-shadow: 0 20px 50px rgba(0, 255, 136, 0.2) !important;
+}
+
+.success-popup h3 {
+  color: var(--color-accent) !important;
+  text-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+}
+
+.success-popup p {
+  color: #e2e8f0 !important;
+}
+
+.success-popup button {
+  background: var(--color-accent) !important;
+  color: #030712 !important;
+  font-weight: 600 !important;
+  border-radius: 20px !important;
+}
+
+.success-popup button:hover {
+  background: #00e676 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4) !important;
+}
+
+/* Navigation menu fixes */
+.site-header .nav-list a {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 8px 12px !important;
+  transition: color 0.3s ease, text-shadow 0.3s ease !important;
+}
+
+.site-header .nav-list a::before,
+.site-header .nav-list a::after {
+  display: none !important;
+}
+
+.site-header .nav-list a:hover {
+  color: var(--color-primary) !important;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.5) !important;
+  transform: none !important;
+}
+
 
 
