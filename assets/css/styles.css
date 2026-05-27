@@ -306,7 +306,7 @@ img[src$="SMname.png"] {
   width: 100%;
   min-height: 100vh;
   align-items: center;
-  margin-top: -150px;
+  margin-top: 10px;
 }
 
 /* About background video layering */
@@ -914,6 +914,7 @@ img[src$="SMname.png"] {
 }
 
 /* Make key sections full-height with shared background image */
+.about,
 .services,
 .properties,
 .financial,
