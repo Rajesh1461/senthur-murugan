@@ -2139,30 +2139,27 @@ h1, h2, h3, .section-title {
   background-position: center top;
 }
 
-/* Scanning Laser Line */
-.laser-scan-container {
-  position: relative;
-}
-.laser-scan-container::after {
+/* Global Viewport Blueprint Laser Scan Line */
+body::after {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--color-primary), var(--color-accent), var(--color-primary), transparent);
-  box-shadow: 0 0 8px var(--color-primary), 0 0 15px var(--color-primary);
-  opacity: 0.35;
-  animation: laserScan 8s linear infinite;
+  box-shadow: 0 0 10px var(--color-primary), 0 0 18px var(--color-primary);
+  opacity: 0.22;
+  animation: globalLaserScan 8s linear infinite;
   pointer-events: none;
-  z-index: 2;
+  z-index: 9999;
 }
 
-@keyframes laserScan {
-  0% { top: 0%; opacity: 0; }
-  5% { opacity: 0.35; }
-  95% { opacity: 0.35; }
-  100% { top: 100%; opacity: 0; }
+@keyframes globalLaserScan {
+  0% { transform: translateY(-20px); opacity: 0; }
+  5% { opacity: 0.22; }
+  95% { opacity: 0.22; }
+  100% { transform: translateY(102vh); opacity: 0; }
 }
 
 /* HUD Glassmorphism Cards */
