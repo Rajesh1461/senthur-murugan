@@ -736,6 +736,25 @@
     });
   }
 
+  function setupVisitorCounter() {
+    const countEl = document.getElementById('visitor-count');
+    if (!countEl) return;
+
+    fetch('https://api.counterapi.dev/v1/senthurmurugan/visits/up')
+      .then(res => {
+        if (!res.ok) throw new Error('API error');
+        return res.json();
+      })
+      .then(data => {
+        if (data && typeof data.count === 'number') {
+          countEl.textContent = Number(data.count).toLocaleString();
+        }
+      })
+      .catch(err => {
+        console.warn('Visitor counter error:', err);
+      });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     applyContact();
     setupNav();
@@ -746,6 +765,7 @@
     setupForm();
     setupHeaderShadow();
     setupFuturisticEffects();
+    setupVisitorCounter();
     // Initialize Lottie hero if present
     try {
       var lottieContainer = document.getElementById('hero-lottie');

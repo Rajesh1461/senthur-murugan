@@ -2620,3 +2620,78 @@ body::after {
 .property-card:hover img {
   transform: scale(1.06) !important;
 }
+
+/* Premium Glassmorphism Visitor Counter */
+.footer-bottom-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.visitor-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #cbd5e1;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.visitor-counter:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 242, 254, 0.25);
+  box-shadow: 0 4px 15px rgba(0, 242, 254, 0.1);
+}
+
+.visitor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #05fc6c;
+  box-shadow: 0 0 8px #05fc6c;
+  animation: visitorPulse 2s infinite;
+}
+
+.visitor-text {
+  font-weight: 500;
+}
+
+.visitor-number {
+  font-weight: 700;
+  color: #00f2fe;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+  font-family: 'Orbitron', monospace;
+  letter-spacing: 0.5px;
+}
+
+@keyframes visitorPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(5, 252, 108, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(5, 252, 108, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(5, 252, 108, 0);
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-bottom-flex {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+}
