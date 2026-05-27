@@ -121,13 +121,25 @@ img {
 img[src$="logo.svg"] {
   transform: scale(1.2);
   transform-origin: left center;
-  /* Subtle white glow */
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.70)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+  animation: slowLogoGlow 4.5s ease-in-out infinite;
 }
 
-/* Apply the same subtle white glow to SMname wordmark */
+/* Apply the same slow breathing glow to SMname wordmark */
 img[src$="SMname.png"] {
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.70)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.45)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+  animation: slowLogoGlow 4.5s ease-in-out infinite;
+}
+
+/* Slow, premium breathing glow animation for logo & wordmark */
+@keyframes slowLogoGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(0, 242, 254, 0.55))
+            drop-shadow(0 0 5px rgba(0, 242, 254, 0.25));
+  }
+  50% {
+    filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.85))
+            drop-shadow(0 0 12px rgba(0, 242, 254, 0.55))
+            drop-shadow(0 0 20px rgba(0, 242, 254, 0.25));
+  }
 }
 
 /* In header, keep the 50px right shift and scale only the logo.svg */
