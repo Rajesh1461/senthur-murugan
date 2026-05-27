@@ -8,6 +8,6 @@ Disallow: /cdn-cgi/
 Allow: /google*.html
 
 # Update this to your live domain
-Sitemap: https://finance.multitoolszone.fun/sitemap.xml
+Sitemap: https://senthurmurugan.com/sitemap.xml
 
 

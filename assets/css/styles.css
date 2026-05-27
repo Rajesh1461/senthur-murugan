@@ -1123,11 +1123,201 @@ img[src$="SMname.png"] {
   transform: translateY(-20px);   
 }
 
-/* Make non-clickable property tabs not show hand cursor or hover effects */
-.properties-tabs span.btn {
-  cursor: default;
-  pointer-events: none;
+/* Interactive Property Filter Tabs */
+.properties-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 30px;
 }
+
+.properties-tabs .btn {
+  cursor: pointer;
+  pointer-events: auto;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.properties-tabs .btn.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(11, 61, 145, 0.2);
+}
+
+/* Fade & Blur Filtered-Out Properties to preserve desktop custom layout positions */
+.properties-grid .property-card {
+  transition: transform 300ms ease, opacity 300ms ease, filter 300ms ease, box-shadow 220ms ease;
+}
+
+.properties-grid .property-card.is-filtered-out {
+  opacity: 0.08;
+  filter: grayscale(100%) blur(1.5px);
+  pointer-events: none;
+  transform: scale(0.9) !important;
+}
+
+/* Premium Glassmorphism Enquiry Modal */
+.enquiry-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.enquiry-modal-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.enquiry-modal {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  width: min(500px, 90%);
+  padding: 30px;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.25);
+  position: relative;
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.enquiry-modal-overlay.is-active .enquiry-modal {
+  transform: scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 18px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: var(--color-muted);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.modal-close:hover {
+  color: var(--color-text);
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-header h3 {
+  margin: 0 0 8px;
+  color: var(--color-primary);
+  font-size: 22px;
+  font-family: 'Merriweather', serif;
+}
+
+.enquiry-sub {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modal-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.choice-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.6);
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.25s ease;
+}
+
+.choice-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.choice-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.choice-title {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.choice-desc {
+  font-size: 12px;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+/* WhatsApp Choice Styles */
+.wa-choice {
+  border-color: rgba(37, 211, 102, 0.15);
+}
+.wa-choice .choice-icon {
+  background: rgba(37, 211, 102, 0.1);
+  color: #25D366;
+}
+.wa-choice:hover {
+  background: rgba(37, 211, 102, 0.05);
+  border-color: #25D366;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.15);
+}
+
+/* Email Choice Styles */
+.email-choice {
+  border-color: rgba(11, 61, 145, 0.15);
+}
+.email-choice .choice-icon {
+  background: rgba(11, 61, 145, 0.1);
+  color: var(--color-primary);
+}
+.email-choice:hover {
+  background: rgba(11, 61, 145, 0.05);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(11, 61, 145, 0.15);
+}
+
 
 /* Floating WhatsApp */
 .floating-wa {

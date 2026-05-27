@@ -65,15 +65,115 @@
     elems.forEach(function (el) { io.observe(el); });
   }
 
-  // Property enquire buttons -> WhatsApp prefill
+  // Property enquiry with premium Dual-Route Modal choice
   function setupPropertyEnquiry() {
-    const buttons = document.querySelectorAll('.enquire-btn');
-    if (!buttons.length || !cfg.whatsappNumber) return;
-    buttons.forEach(function (btn) {
-      btn.addEventListener('click', function () {
+    const enquireButtons = document.querySelectorAll('.enquire-btn');
+    const modal = document.getElementById('enquiry-modal');
+    if (!enquireButtons.length || !modal) return;
+    
+    const modalTitle = document.getElementById('enquiry-property-title');
+    const closeBtn = modal.querySelector('.modal-close');
+    const waBtn = document.getElementById('modal-wa-btn');
+    const emailBtn = document.getElementById('modal-email-btn');
+    
+    let currentPropertyTitle = '';
+    
+    function openModal(title) {
+      currentPropertyTitle = title;
+      if (modalTitle) modalTitle.textContent = title;
+      modal.classList.add('is-active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+    
+    function closeModal() {
+      modal.classList.remove('is-active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+    
+    enquireButtons.forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
         const title = this.getAttribute('data-title') || 'the property';
-        const msg = `Hello, I am interested in ${title}. Please share details.`;
-        window.open(`https://wa.me/${cfg.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        openModal(title);
+      });
+    });
+    
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
+    
+    // Close on overlay click
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+    
+    // WhatsApp route handler
+    if (waBtn) {
+      waBtn.addEventListener('click', function() {
+        if (cfg.whatsappNumber) {
+          const msg = `Hello, I am interested in ${currentPropertyTitle}. Please share details.`;
+          window.open(`https://wa.me/${cfg.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+        closeModal();
+      });
+    }
+    
+    // Email route handler (pre-fills contact form and smooth scrolls)
+    if (emailBtn) {
+      emailBtn.addEventListener('click', function() {
+        const contactFormSection = document.getElementById('contact');
+        const messageField = document.getElementById('message');
+        
+        closeModal();
+        
+        if (contactFormSection) {
+          contactFormSection.scrollIntoView({ behavior: 'smooth' });
+          
+          if (messageField) {
+            messageField.value = `Hello, I am interested in "${currentPropertyTitle}". Please share more details and pricing.`;
+            // Focus the contact name input to guide the user naturally
+            const nameField = document.getElementById('name');
+            if (nameField) {
+              setTimeout(() => {
+                nameField.focus();
+              }, 800); // Wait for smooth scroll to finish
+            }
+          }
+        }
+      });
+    }
+  }
+
+  // Setup Property category filtering
+  function setupPropertyFilters() {
+    const filterButtons = document.querySelectorAll('.properties-tabs button[role="tab"]');
+    const propertyCards = document.querySelectorAll('.properties-grid .property-card');
+    
+    if (!filterButtons.length || !propertyCards.length) return;
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Update active tab styling
+        filterButtons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+        
+        const filterValue = this.getAttribute('data-filter') || 'all';
+        
+        // Apply filter with smooth transition class
+        propertyCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filterValue === 'all' || category === filterValue) {
+             card.classList.remove('is-filtered-out');
+          } else {
+             card.classList.add('is-filtered-out');
+          }
+        });
       });
     });
   }
@@ -443,15 +543,15 @@
        }).then(response => response.json());
        
        // Wait for all three submissions
-       Promise.all([promise1, promise2, promise3])
+       Promise.allSettled([promise1, promise2, promise3])
          .then(results => {
            console.log('Web3Forms responses:', results);
-           const successCount = results.filter(result => result.success).length;
+           const successCount = results.filter(r => r.status === 'fulfilled' && r.value && r.value.success).length;
            
            if (successCount > 0) {
              // Send WhatsApp notification
              sendWhatsAppNotification(name, email, phone, message);
-             showSuccessPopup(`Thank you! Your message has been sent successfully to ${successCount} team members. We will get back to you soon.`);
+             showSuccessPopup(`Thank you! Your message has been sent successfully. We will get back to you soon.`);
              form.reset();
            } else {
              throw new Error('All form submissions failed');
@@ -488,6 +588,7 @@
     applyContact();
     setupNav();
     setupReveal();
+    setupPropertyFilters();
     setupPropertyEnquiry();
     setupEmailLinks();
     setupForm();
