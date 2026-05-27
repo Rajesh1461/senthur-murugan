@@ -347,14 +347,14 @@ img[src$="SMname.png"] {
 
 /* Shift only the About Us heading 100px left */
 .about .about-copy h2 {
-  color: #18bb4e;
-  text-shadow: 1px 0 0 rgba(15, 23, 42, 0.8), -1px 0 0 rgba(15, 23, 42, 0.8), 0 1px 0 rgba(15, 23, 42, 0.8), 0 -1px 0 rgba(15, 23, 42, 0.8);
+  color: var(--color-primary) !important;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.45) !important;
   margin-left: -100px;
 }
 
 /* Shift only the top-level About description paragraph 100px left */
 .about .about-copy > p {
-  color: #d89cae;
+  color: var(--color-text) !important;
   margin-left: -100px; margin-right: 110px;
 }
 
