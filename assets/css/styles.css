@@ -698,28 +698,54 @@ img[src$="SMname.png"] {
 .properties-grid .property-card:nth-child(1) {
   justify-self: start;
   width: 280px;
+  transform: translateY(12px);
+}
+.properties-grid .property-card:nth-child(1).is-visible {
   transform: translateY(-50px);
 }
 
 /* Property 2 - Left center position */
-.properties-grid .property-card:nth-child(2).reveal-on-scroll.is-visible {
+.properties-grid .property-card:nth-child(2) {
   justify-self: start;
-  transform: translateX(-180px) translateY(-50px);
   width: 280px;
+  transform: translateX(-180px) translateY(12px);
+}
+.properties-grid .property-card:nth-child(2).is-visible {
+  transform: translateX(-180px) translateY(-50px);
 }
 
 /* Property 3 - Right center position */
 .properties-grid .property-card:nth-child(3) {
   justify-self: start;
-  transform: translateX(100px) translateY(-50px);
   width: 280px;
+  transform: translateX(100px) translateY(12px);
+}
+.properties-grid .property-card:nth-child(3).is-visible {
+  transform: translateX(100px) translateY(-50px);
 }
 
 /* Property 4 - Rightmost position */
 .properties-grid .property-card:nth-child(4) {
   justify-self: start;
-  transform: translateX(380px) translateY(-50px);
   width: 280px;
+  transform: translateX(380px) translateY(12px);
+}
+.properties-grid .property-card:nth-child(4).is-visible {
+  transform: translateX(380px) translateY(-50px);
+}
+
+/* Preserve translateX and add hover lift for nth-child properties on desktop */
+.properties-grid .property-card:nth-child(1):hover {
+  transform: translateY(-56px) !important;
+}
+.properties-grid .property-card:nth-child(2):hover {
+  transform: translateX(-180px) translateY(-56px) !important;
+}
+.properties-grid .property-card:nth-child(3):hover {
+  transform: translateX(100px) translateY(-56px) !important;
+}
+.properties-grid .property-card:nth-child(4):hover {
+  transform: translateX(380px) translateY(-56px) !important;
 }
 
 .properties-grid .property-card:nth-child(5) {
@@ -1460,13 +1486,13 @@ img[src$="SMname.png"] {
   transform: translateY(0);
 }
 
-/* Swipe-from-right animation helper for reveal-on-scroll */
+/* Swipe-from-right animation helper for reveal-on-scroll - updated to vertical reveal to prevent right-to-left horizontal jump */
 .reveal-on-scroll.from-right {
-  transform: translateX(60px);
+  transform: translateY(12px);
 }
 
 .reveal-on-scroll.from-right.is-visible {
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 /* Completed Properties Page Styles */
@@ -1807,10 +1833,10 @@ img[src$="SMname.png"] {
   }
 
   .about-cards {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    transform: none;
-    margin-top: 20px;
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    transform: none !important;
+    margin-top: 20px !important;
   }
 
   .about-card {
@@ -1887,7 +1913,7 @@ img[src$="SMname.png"] {
     margin-bottom: 20px;
   }
 
-  /* Reset all property card positioning for mobile */
+  /* Reset all property card positioning for mobile and force vertical-only scroll reveal */
   .properties-grid .property-card,
   .properties-grid .property-card:nth-child(1),
   .properties-grid .property-card:nth-child(2),
@@ -1897,10 +1923,35 @@ img[src$="SMname.png"] {
   .properties-grid .property-card:nth-child(6),
   .properties-grid .property-card:nth-child(7),
   .properties-grid .property-card:nth-child(8) {
-    transform: none;
-    width: 100%;
-    justify-self: stretch;
-    grid-column: auto;
+    transform: translateY(12px) !important;
+    width: 100% !important;
+    justify-self: stretch !important;
+    grid-column: auto !important;
+    margin: 0 0 20px !important;
+  }
+
+  .properties-grid .property-card.is-visible,
+  .properties-grid .property-card:nth-child(1).is-visible,
+  .properties-grid .property-card:nth-child(2).is-visible,
+  .properties-grid .property-card:nth-child(3).is-visible,
+  .properties-grid .property-card:nth-child(4).is-visible,
+  .properties-grid .property-card:nth-child(5).is-visible,
+  .properties-grid .property-card:nth-child(6).is-visible,
+  .properties-grid .property-card:nth-child(7).is-visible,
+  .properties-grid .property-card:nth-child(8).is-visible {
+    transform: translateY(0) !important;
+  }
+
+  .properties-grid .property-card:hover,
+  .properties-grid .property-card:nth-child(1):hover,
+  .properties-grid .property-card:nth-child(2):hover,
+  .properties-grid .property-card:nth-child(3):hover,
+  .properties-grid .property-card:nth-child(4):hover,
+  .properties-grid .property-card:nth-child(5):hover,
+  .properties-grid .property-card:nth-child(6):hover,
+  .properties-grid .property-card:nth-child(7):hover,
+  .properties-grid .property-card:nth-child(8):hover {
+    transform: translateY(-6px) !important;
   }
 
   /* Completed properties mobile adjustments */
