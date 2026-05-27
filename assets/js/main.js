@@ -195,78 +195,92 @@
   }
 
      // Success popup function
-   function showSuccessPopup(message) {
-     // Remove existing popup if any
-     const existingPopup = document.querySelector('.success-popup');
-     if (existingPopup) {
-       existingPopup.remove();
-     }
+    function showSuccessPopup(message) {
+      // Remove existing popup if any
+      const existingPopup = document.querySelector('.success-popup');
+      if (existingPopup) {
+        existingPopup.remove();
+      }
 
-     // Remove existing overlay if any
-     const existingOverlay = document.querySelector('.popup-overlay');
-     if (existingOverlay) {
-       existingOverlay.remove();
-     }
+      // Remove existing overlay if any
+      const existingOverlay = document.querySelector('.popup-overlay');
+      if (existingOverlay) {
+        existingOverlay.remove();
+      }
 
-     // Create popup container
-     const popup = document.createElement('div');
-     popup.className = 'success-popup';
-     popup.style.cssText = `
-       position: fixed;
-       top: 50%;
-       left: 50%;
-       transform: translate(-50%, -50%);
-       background: white;
-       padding: 2rem;
-       border-radius: 12px;
-       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-       z-index: 10000;
-       max-width: 400px;
-       text-align: center;
-       border: 2px solid #4CAF50;
-     `;
+      // Create overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'popup-overlay';
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+      `;
 
-     // Create popup content
-     popup.innerHTML = `
-       <div style="margin-bottom: 1rem;">
-         <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-           <circle cx="12" cy="12" r="10" fill="#4CAF50"/>
-           <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-         </svg>
-       </div>
-       <h3 style="margin: 0 0 1rem 0; color: #333; font-size: 1.25rem;">Success!</h3>
-       <p style="margin: 0 0 1.5rem 0; color: #666; line-height: 1.5;">${message}</p>
-       <button onclick="this.parentElement.remove()" style="
-         background: #4CAF50;
-         color: white;
-         border: none;
-         padding: 0.75rem 1.5rem;
-         border-radius: 6px;
-         cursor: pointer;
-         font-size: 1rem;
-         font-weight: 500;
-         transition: background 0.3s;
-       " onmouseover="this.style.background='#45a049'" onmouseout="this.style.background='#4CAF50'">
-         OK
-       </button>
-     `;
+      // Create popup container
+      const popup = document.createElement('div');
+      popup.className = 'success-popup';
+      popup.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        max-width: 400px;
+        text-align: center;
+        border: 2px solid #4CAF50;
+      `;
 
-     // Create overlay
-     const overlay = document.createElement('div');
-     overlay.className = 'popup-overlay';
-     overlay.style.cssText = `
-       position: fixed;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 100%;
-       background: rgba(0, 0, 0, 0.5);
-       z-index: 9999;
-     `;
+      // Create popup content safely to prevent XSS
+      popup.innerHTML = `
+        <div style="margin-bottom: 1rem;">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" fill="#4CAF50"/>
+            <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 style="margin: 0 0 1rem 0; color: #333; font-size: 1.25rem;">Success!</h3>
+        <p class="popup-message-text" style="margin: 0 0 1.5rem 0; color: #666; line-height: 1.5;"></p>
+        <button class="popup-close-btn" style="
+          background: #4CAF50;
+          color: white;
+          border: none;
+          padding: 0.75rem 1.5rem;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
+          transition: background 0.3s;
+        " onmouseover="this.style.background='#45a049'" onmouseout="this.style.background='#4CAF50'">
+          OK
+        </button>
+      `;
 
-     // Add to page
-     document.body.appendChild(overlay);
-     document.body.appendChild(popup);
+      // Set content using textContent to automatically encode and protect against XSS
+      const msgText = popup.querySelector('.popup-message-text');
+      if (msgText) {
+        msgText.textContent = message;
+      }
+
+      const closeBtn = popup.querySelector('.popup-close-btn');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () {
+          popup.remove();
+          overlay.remove();
+        });
+      }
+
+      // Add to page
+      document.body.appendChild(overlay);
+      document.body.appendChild(popup);
 
      // Auto-remove after 5 seconds
      setTimeout(() => {
@@ -658,26 +672,26 @@
       function animateParticles() {
         ctx.clearRect(0, 0, width, height);
 
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update();
-          particles[i].draw();
+        particles.forEach((p1, i) => {
+          p1.update();
+          p1.draw();
 
-          // Connect particles
-          for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
+          // Connect particles safely without bracket notation to avoid prototype pollution warnings
+          particles.slice(i + 1).forEach(p2 => {
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
             const dist = Math.hypot(dx, dy);
 
             if (dist < 110) {
               ctx.beginPath();
-              ctx.moveTo(particles[i].x, particles[i].y);
-              ctx.lineTo(particles[j].x, particles[j].y);
+              ctx.moveTo(p1.x, p1.y);
+              ctx.lineTo(p2.x, p2.y);
               ctx.strokeStyle = `rgba(0, 242, 254, ${0.18 * (1 - dist / 110)})`;
               ctx.lineWidth = 0.8;
               ctx.stroke();
             }
-          }
-        }
+          });
+        });
         requestAnimationFrame(animateParticles);
       }
       animateParticles();
