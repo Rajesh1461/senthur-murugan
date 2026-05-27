@@ -700,6 +700,7 @@ img[src$="SMname.png"] {
   width: 280px;
   transform: translateY(12px);
 }
+
 .properties-grid .property-card:nth-child(1).is-visible {
   transform: translateY(-50px);
 }
@@ -710,6 +711,7 @@ img[src$="SMname.png"] {
   width: 280px;
   transform: translateX(-180px) translateY(12px);
 }
+
 .properties-grid .property-card:nth-child(2).is-visible {
   transform: translateX(-180px) translateY(-50px);
 }
@@ -720,6 +722,7 @@ img[src$="SMname.png"] {
   width: 280px;
   transform: translateX(100px) translateY(12px);
 }
+
 .properties-grid .property-card:nth-child(3).is-visible {
   transform: translateX(100px) translateY(-50px);
 }
@@ -730,6 +733,7 @@ img[src$="SMname.png"] {
   width: 280px;
   transform: translateX(380px) translateY(12px);
 }
+
 .properties-grid .property-card:nth-child(4).is-visible {
   transform: translateX(380px) translateY(-50px);
 }
@@ -738,12 +742,15 @@ img[src$="SMname.png"] {
 .properties-grid .property-card:nth-child(1):hover {
   transform: translateY(-56px) !important;
 }
+
 .properties-grid .property-card:nth-child(2):hover {
   transform: translateX(-180px) translateY(-56px) !important;
 }
+
 .properties-grid .property-card:nth-child(3):hover {
   transform: translateX(100px) translateY(-56px) !important;
 }
+
 .properties-grid .property-card:nth-child(4):hover {
   transform: translateX(380px) translateY(-56px) !important;
 }
