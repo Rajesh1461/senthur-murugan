@@ -2452,24 +2452,7 @@ body::after {
   grid-column: span 3 !important;
 }
 
-/* Financial Solutions Section Bento Grid */
-.financial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr) !important;
-  gap: 24px !important;
-}
-
-.financial-card:nth-child(1) {
-  grid-column: span 2 !important;
-}
-
-.financial-card:nth-child(2) {
-  grid-column: span 1 !important;
-}
-
-.financial-card:nth-child(3) {
-  grid-column: span 3 !important;
-}
+/* Financial Solutions Section - Restored to balanced equal-width column layout for desktop and mobile grid alignments */
 
 /* Particle Canvas Backdrop styling */
 #hero-particle-canvas {
